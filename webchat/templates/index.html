@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Webchat with LM Studio</title>
+    <script>
+        async function sendMessage() {
+            const message = document.getElementById("user-input").value;
+            const response = await fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message })
+            });
+            const data = await response.json();
+            document.getElementById("chat-box").innerHTML += `<p><b>User:</b> ${message}</p><p><b>AI:</b> ${data.response}</p>`;
+            document.getElementById("user-input").value = '';
+        }
+    </script>
+</head>
+<body>
+    <h1>Webchat with LM Studio</h1>
+    <div id="chat-box" style="border:1px solid #ddd; padding:10px; max-width:500px; max-height:400px; overflow-y:auto;"></div>
+    <input type="text" id="user-input" placeholder="Type a message..." style="width:400px;">
+    <button onclick="sendMessage()">Send</button>
+</body>
+</html>
